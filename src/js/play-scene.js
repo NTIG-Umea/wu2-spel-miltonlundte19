@@ -115,7 +115,7 @@ class PlayScene extends Phaser.Scene {
         });
 
         
-        this.cameras.main.startFollow(this.player);
+        this.cameras.main.startFollow(this.player, false, 0.5, 0.5);
     }
 
     // play scenens update metod
