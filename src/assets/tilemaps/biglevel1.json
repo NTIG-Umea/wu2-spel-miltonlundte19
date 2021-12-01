@@ -183,7 +183,7 @@
         {
          "draworder":"topdown",
          "id":3,
-         "name":"Spikse",
+         "name":"Spikes",
          "objects":[
                 {
                  "gid":76,
@@ -357,12 +357,11 @@
          "imageheight":448,
          "imagewidth":704,
          "margin":0,
-         "name":"jefrens_tilesheet",
+         "name":"jefrens_platformer",
          "spacing":0,
          "tilecount":77,
          "tileheight":64,
-         "tilewidth":64,
-         "transparentcolor":"#ff00ff"
+         "tilewidth":64
         }],
  "tilewidth":64,
  "type":"map",
