@@ -3,6 +3,11 @@ class PreloadScene extends Phaser.Scene {
         super('MenuScene');
     }
 
+    init(data) {
+        console.log(data);
+        this.resumesine = data.namee;
+    }
+
     create() {
         // Det går att göra så att input lyssnar på spelet
         // nu är det på scenen, därför behöver vi skapa input igen
@@ -21,13 +26,14 @@ class PreloadScene extends Phaser.Scene {
             fixedWidth: this.game.config.width,
             fixedHeight: this.game.config.height,
         });
+        
     }
 
     // scenens uppdate metod, lyssnar på keyDown
     update() {
         if (this.keyObj.isDown) {
             // resumera spelscenen
-            this.scene.resume('PlayScene');
+            this.scene.resume(this.resumesine);
             // göm denna scen
             this.scene.setVisible(false);
         }

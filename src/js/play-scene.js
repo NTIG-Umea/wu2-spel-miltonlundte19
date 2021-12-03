@@ -116,6 +116,8 @@ class PlayScene extends Phaser.Scene {
 
         
         this.cameras.main.startFollow(this.player, false, 0.5, 0.5);
+
+        
     }
 
     // play scenens update metod
@@ -125,8 +127,7 @@ class PlayScene extends Phaser.Scene {
             // pausa nuvarande scen
             this.scene.pause();
             // starta menyscenene
-            this.scene.launch('MenuScene');
-            console.log(this.player);
+            this.scene.launch('MenuScene', {'namee': 'PlayScene'});
         }
 
         // följande kod är från det tutorial ni gjort tidigare
