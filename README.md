@@ -13,7 +13,7 @@ Projektet använder
 
  - [x] Kuna lada in störe mapar 
  - [x] att pysiken och cameran fungerar på störe mapar
- - [ ] att lada in andra mapar (next map)
+ - [x] att lada in andra mapar (next map)
 
 
 ### veko planering
