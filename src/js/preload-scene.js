@@ -1,17 +1,6 @@
 class PreloadScene extends Phaser.Scene {
     constructor() {
         super('PreloadScene');
-        this.sceneToStart = {
-            namee: 'PlayScene',
-            maap: '/tilemaps/biglevel1.json'
-        }
-    }
-
-    init(data) {
-        if (Object.values(data).length > 0) {
-            this.sceneToStart.namee = data.namee;
-            this.sceneToStart.maap = data.maap;
-        }        
     }
 
     preload() {
@@ -31,11 +20,11 @@ class PreloadScene extends Phaser.Scene {
         );
         this.load.image('tiles', '/tilesets/jefrens_tilesheet.png');
         // här laddar vi in en tilemap med spelets "karta"
-        this.load.tilemapTiledJSON('map', this.sceneToStart.maap);
+        this.load.tilemapTiledJSON('map', '/tilemaps/biglevel1.json');
     }
 
     create() {
-        this.scene.start(this.sceneToStart.namee);
+        this.scene.start('PlayScene');
     }
 }
 
