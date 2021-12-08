@@ -4,21 +4,26 @@ class PreloadScene extends Phaser.Scene {
 
         this.sceneToStart = {
             namee: '',
-            maap: ''
+            maap: '',
+            mapkye: ''
         }
     }
 
     init(data) {
         this.sceneToStart.namee = data.namee;
         this.sceneToStart.maap = data.maap;
+        this.sceneToStart.mapkye = data.mapkye;
     }
 
     preload() {
-        this.load.tilemapTiledJSON('map', this.sceneToStart.maap);
+        this.load.setBaseURL('/assets');
+        this.load.tilemapTiledJSON(this.sceneToStart.mapkye , this.sceneToStart.maap);
     }
 
     create() {
-        this.scene.start(this.sceneToStart.namee);
+        this.scene.start(this.sceneToStart.namee, {
+            'mapkye': this.sceneToStart.mapkye
+        });
     }
 }
 

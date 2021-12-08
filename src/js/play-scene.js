@@ -3,17 +3,20 @@ class PlayScene extends Phaser.Scene {
         super('PlayScene');
     }
 
+    init(data) {
+        this.mapkey = data.mapkye;
+    }
+
     create() {
         // variabel för att hålla koll på hur många gånger vi spikat oss själva
         this.spiked = 0;
 
-        
         // ladda spelets bakgrundsbild, statisk
         // setOrigin behöver användas för att den ska ritas från top left
         //this.add.image(0, 0, 'background').setOrigin(0, 0);
 
         // skapa en tilemap från JSON filen vi preloadade
-        const map = this.make.tilemap({ key: 'map' });
+        const map = this.make.tilemap({ key: this.mapkey });
         
         // ladda in tilesetbilden till vår tilemap
         const tileset = map.addTilesetImage('jefrens_platformer', 'tiles');
@@ -24,7 +27,7 @@ class PlayScene extends Phaser.Scene {
 
         // keyboard cursors
         this.cursors = this.input.keyboard.createCursorKeys();
-        
+
         this.physics.world.setBounds(0,0, map.widthInPixels, map.heightInPixels);
         this.cameras.main.setBounds(0,0, map.widthInPixels, map.heightInPixels);
         
@@ -117,7 +120,21 @@ class PlayScene extends Phaser.Scene {
         
         this.cameras.main.startFollow(this.player, false, 0.5, 0.5);
 
-        
+        this.nextmap = this.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+
+        map.getObjectLayer('nekst-map').objects.forEach((colisonGrop) => {
+            const curentObject = new Phaser.GameObjects.Rectangle(
+                this, colisonGrop.x, colisonGrop.y, colisonGrop.width, colisonGrop.height
+            ).setOrigin(0);
+
+            this.physics.add.existing(curentObject, true);
+            this.nextmap.add(curentObject);
+        });
+
+        this.physics.add.overlap(this.player, this.nextmap, this.lodeNextMap, null, this);
     }
 
     // play scenens update metod
@@ -193,6 +210,14 @@ class PlayScene extends Phaser.Scene {
             repeat: 5
         });
         this.updateText();
+    }
+
+    lodeNextMap() {
+        this.scene.start('PreloadScene', {
+            'namee': 'LavinScene',
+            'maap': '/tilemaps/lavintest1.json',
+            'mapkye': 'mapp'
+        });
     }
 
     // när vi skapar scenen så körs initAnims för att ladda spelarens animationer
