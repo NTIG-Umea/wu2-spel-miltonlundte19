@@ -4,7 +4,6 @@ class PreloadScene extends Phaser.Scene {
     }
 
     init(data) {
-        console.log(data);
         this.resumesine = data.namee;
     }
 
@@ -36,6 +35,7 @@ class PreloadScene extends Phaser.Scene {
             this.scene.resume(this.resumesine);
             // göm denna scen
             this.scene.setVisible(false);
+            this.scene.pause();
         }
     }
 }
