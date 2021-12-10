@@ -12,75 +12,134 @@ class PlayScene extends Phaser.Scene {
 
         const map = this.make.tilemap({ key: this.mapkey });
 
-        console.log(map);
-
         const tileset = map.addTilesetImage('jefrens_platformer', 'tiles');
 
-        console.log(map);
         this.initAnims();
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        console.log(map.widthInPixels);
         this.physics.world.setBounds(0,0, map.widthInPixels, map.heightInPixels);
-        this.cameras.main.setBounds(0,0, map.widthInPixels, map.heightInPixels);
-
-        
+        this.cameras.main.setBounds(0,0, map.widthInPixels, map.heightInPixels);        
         
         map.createLayer('Bakground-1', tileset);
         map.createLayer('Forgroudn-1', tileset);
+        map.createLayer('Platforms-Visual', tileset);
+        map.createLayer('Vitory-mark', tileset);
         this.platforms = map.createLayer('Platforms-Solid', tileset);
         this.platforms.setCollisionByExclusion(-1, true);
 
-        this.spawn = map.getObjectLayer('Player-Spawn').objects;
-
-        this.player = this.physics.add.sprite(this.spawn[0].x, this.spawn[0].y, 'player');
-        this.player.setBounce(0.1);
-        this.player.setCollideWorldBounds(true);
-
-        this.physics.add.collider(this.player, this.platforms);
-
-        this.cameras.main.startFollow(this.player, false, 0.5, 0.5);
-
-        this.vitorychek = this.add.group({
+        this.colison = this.add.group({
             allowGravity: false,
             immovable: true
         });
 
-        map.getObjectLayer('Vitory').objects.forEach((colisonGrop) => {
+        map.getObjectLayer('Colison').objects.forEach((colisonGrop) => {
             const curentObject = new Phaser.GameObjects.Rectangle(
                 this, colisonGrop.x, colisonGrop.y, colisonGrop.width, colisonGrop.height
             ).setOrigin(0);
 
             this.physics.add.existing(curentObject, true);
-            this.vitorychek.add(curentObject);
+            this.colison.add(curentObject);
         });
 
-        console.log(this.vitorychek);
-        console.log(this.physics.world);
-        console.log(this.cameras.main);
+        this.spikes = this.physics.add.group({
+            allowGravity: false,
+            immovable: true
+        });
 
+        map.getObjectLayer('Spiks').objects.forEach((spike) => {
+            const spikeSprite = this.spikes
+                .create(spike.x, spike.y - spike.height, 'spike')
+                .setOrigin(0);
+            spikeSprite.body
+                .setSize(spike.width, spike.height - 20)
+                .setOffset(0, 20);
+        });
+
+        this.spawn = map.getObjectLayer('Player-Spawn').objects;
+        this.spawn = this.spawn[0];
+
+        this.player = this.physics.add.sprite(this.spawn.x, this.spawn.y-30, 'player');
+        this.player.setBounce(0.1);
+        this.player.setCollideWorldBounds(true);
+
+        
+        this.cameras.main.startFollow(this.player, false, 0.5, 0.5);
+        
+        this.vitorychek = this.add.group({
+            allowGravity: false,
+            immovable: true
+        });
+        
+        map.getObjectLayer('Vitory').objects.forEach((colisonGrop) => {
+            const curentObject = new Phaser.GameObjects.Rectangle(
+                this, colisonGrop.x, colisonGrop.y, colisonGrop.width, colisonGrop.height
+                ).setOrigin(0);
+                
+                this.physics.add.existing(curentObject, true);
+                this.vitorychek.add(curentObject);
+        });
+            
+        this.physics.add.collider(
+            this.player,
+            this.spikes,
+            this.playerHit,
+            null,
+            this
+        );
+        this.physics.add.collider(this.player, this.platforms);
+        this.physics.add.collider(this.player, this.colison);
+                
         this.text = this.add.text(16, 16, '', {
             fontSize: '20px',
             fill: '#ffffff'
         });
         this.text.setScrollFactor(0);
         this.updateText();
-
+                
         this.keyObj = this.input.keyboard.addKey('W', true, false);
-
+        this.testingKeyObj = this.input.keyboard.addKey('P', true, false);
+        //this.stoplavintest = this.input.keyboard.addKey('I', true, false);
+                
         this.events.on('pause', function () {
             console.log('Play scene paused');
         });
         this.events.on('resume', function () {
             console.log('Play scene resumed');
         });
+
+        //gör lavinen
+        this.lavins = this.physics.add.group({
+            allowGravity: false,
+            immovable: false
+        });
+
+        let lavinbody = new Phaser.GameObjects.Rectangle(
+            this, 0, 0, 30, map.heightInPixels
+        );
+        this.physics.add.existing(lavinbody);
+        this.lavins.add(lavinbody);
+        this.lavins.setY(map.heightInPixels/2);
+        this.physics.add.overlap(this.player, this.lavins.children.entries[0], this.lavinhits, null, this);
+
+        var lavintextur1 = this.add.rectangle(0, -1, 100, 172, 0xffffff).setOrigin(0.5, 0);
+        var lavintextur2 = this.add.rectangle(0, 170, 100, 172, 0xffffff).setOrigin(0.5, 0);
+        var lavintextur3 = this.add.rectangle(0, 341, 100, 172, 0xffffff).setOrigin(0.5, 0);
+        this.lavins.add(lavintextur1);
+        this.lavins.add(lavintextur2);
+        this.lavins.add(lavintextur3);
     }
 
     update() {
+
+
         if (this.keyObj.isDown) {
             this.scene.pause();
             this.scene.launch('MenuScene', {'namee': 'LavinScene'});
+        }
+
+        if (this.testingKeyObj.isDown) {
+            this.player.setVelocityY(-200);
         }
 
         if (this.cursors.left.isDown) {
@@ -114,12 +173,41 @@ class PlayScene extends Phaser.Scene {
             // otherwise, make them face the other side
             this.player.setFlipX(true);
         }
+
+        this.lavins.setVelocityX(20);
+        
     }
 
     updateText() {
         this.text.setText(
             `Arrow keys to move. Space to jump. W to pause. Spiked: ${this.spiked}`
         );
+    }
+
+    playerHit(player, spike) {
+        this.spiked++;
+        player.setVelocity(0, 0);
+        player.setX(this.spawn.x);
+        player.setY(this.spawn.y-30);
+        player.play('idle', true);
+        let tw = this.tweens.add({
+            targets: player,
+            alpha: { start: 0, to: 1 },
+            tint: { start: 0xff0000, to: 0xffffff },
+            duration: 100,
+            ease: 'Linear',
+            repeat: 5
+        });
+        this.updateText();
+        this.lavins.setX(-10);
+    }
+
+    lavinhits(player, lavins) {
+        player.setVelocity(0, 0);
+        player.setX(this.spawn.x);
+        player.setY(this.spawn.y-30);
+        player.play('idle', true);
+        this.lavins.setX(0);
     }
 
     initAnims() {
