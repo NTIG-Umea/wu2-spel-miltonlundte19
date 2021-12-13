@@ -79,7 +79,7 @@ class PlayScene extends Phaser.Scene {
                 this.physics.add.existing(curentObject, true);
                 this.vitorychek.add(curentObject);
         });
-            
+        
         this.physics.add.collider(
             this.player,
             this.spikes,
@@ -89,14 +89,14 @@ class PlayScene extends Phaser.Scene {
         );
         this.physics.add.collider(this.player, this.platforms);
         this.physics.add.collider(this.player, this.colison);
-                
+        
         this.text = this.add.text(16, 16, '', {
             fontSize: '20px',
             fill: '#ffffff'
         });
         this.text.setScrollFactor(0);
         this.updateText();
-                
+        
         this.keyObj = this.input.keyboard.addKey('W', true, false);
         this.testingKeyObj = this.input.keyboard.addKey('P', true, false);
         //this.stoplavintest = this.input.keyboard.addKey('I', true, false);
@@ -128,6 +128,7 @@ class PlayScene extends Phaser.Scene {
         this.lavins.add(lavintextur1);
         this.lavins.add(lavintextur2);
         this.lavins.add(lavintextur3);
+        this.physics.add.overlap(this.player, this.vitorychek, this.lodeNextMap, null, this);
     }
 
     update() {
@@ -208,6 +209,14 @@ class PlayScene extends Phaser.Scene {
         player.setY(this.spawn.y-30);
         player.play('idle', true);
         this.lavins.setX(0);
+    }
+
+    lodeNextMap() {
+        this.scene.start('PreloadScene', {
+            'namee': 'LevelOne',
+            'maap': '/tilemaps/level-1.json',
+            'mapkye': 'mepp'
+        });
     }
 
     initAnims() {
