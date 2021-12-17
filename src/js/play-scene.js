@@ -220,10 +220,16 @@ class PlayScene extends Phaser.Scene {
 
     lodeNextMap() {
         this.scene.start('PreloadScene', {
-            'namee': 'LavinScene',
-            'maap': '/tilemaps/lavintest1.json',
-            'mapkye': 'mapp'
+            'namee': 'LevelOne',
+            'maap': '/tilemaps/level-1.json',
+            'mapkye': 'mepp'
         });
+
+        //this.scene.start('PreloadScene', {
+        //    'namee': 'LavinScene',
+        //    'maap': '/tilemaps/lavintest1.json',
+        //    'mapkye': 'mapp'
+        //});
     }
 
     // när vi skapar scenen så körs initAnims för att ladda spelarens animationer

@@ -3,6 +3,7 @@ import PlayScene from './play-scene';
 import PreloadScene from './preload-scene';
 import MenuScene from './menu-scene';
 import LavinScene from './lavintest-level';
+import LevelOne from './levelone';
 
 // spelets config
 const config = {
@@ -18,7 +19,7 @@ const config = {
             debug: true
         }
     },
-    scene: [PreloadScene, PlayScene, MenuScene, LavinScene],
+    scene: [PreloadScene, PlayScene, MenuScene, LavinScene, LevelOne ],
     parent: 'game'
 };
 

@@ -128,6 +128,7 @@ class PlayScene extends Phaser.Scene {
         this.lavins.add(lavintextur1);
         this.lavins.add(lavintextur2);
         this.lavins.add(lavintextur3);
+
         this.physics.add.overlap(this.player, this.vitorychek, this.lodeNextMap, null, this);
     }
 
