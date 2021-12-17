@@ -31,4 +31,6 @@ Projektet använder
 3. hita bra camera instälningar
 4. kuna lada in nesta karta (map)
 5. implementera lavinens system/början på funktionen
-6. 
+
+
+
