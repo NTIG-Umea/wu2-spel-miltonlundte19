@@ -109,8 +109,6 @@ class PlayScene extends Phaser.Scene {
         // lägg till en keyboard input för W
         this.keyObj = this.input.keyboard.addKey('W', true, false);
 
-        this.testingKeyObj = this.input.keyboard.addKey('O', true, false);
-
         // exempel för att lyssna på events
         this.events.on('pause', function () {
             console.log('Play scene paused');
@@ -147,10 +145,6 @@ class PlayScene extends Phaser.Scene {
             this.scene.pause();
             // starta menyscenene
             this.scene.launch('MenuScene', {'namee': 'PlayScene'});
-        }
-
-        if (this.testingKeyObj.isDown) {
-            this.player.setPosition(1700, 466);
         }
 
         // följande kod är från det tutorial ni gjort tidigare
