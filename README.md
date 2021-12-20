@@ -55,3 +55,18 @@ URL: https://agitated-murdock-948596.netlify.app
 GIT: https://github.com/NTIG-Umea/wu2-spel-miltonlundte19
 
 Teamname: Furious-Zebras
+
+
+
+```
+{
+    "team": "Furious-Zebras",
+    "creators": "Milton Lund",
+    "title": "",
+    "description": "",
+    "image": "milton-lund.png",
+    "url": "https://agitated-murdock-948596.netlify.app",
+    "git": "https://github.com/NTIG-Umea/wu2-spel-miltonlundte19",
+    "survey": ""
+}
+```
