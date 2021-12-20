@@ -98,7 +98,6 @@ class PlayScene extends Phaser.Scene {
         this.updateText();
         
         this.keyObj = this.input.keyboard.addKey('W', true, false);
-        this.testingKeyObj = this.input.keyboard.addKey('P', true, false);
         //this.stoplavintest = this.input.keyboard.addKey('I', true, false);
                 
         this.events.on('pause', function () {
@@ -138,10 +137,6 @@ class PlayScene extends Phaser.Scene {
         if (this.keyObj.isDown) {
             this.scene.pause();
             this.scene.launch('MenuScene', {'namee': 'LavinScene'});
-        }
-
-        if (this.testingKeyObj.isDown) {
-            this.player.setVelocityY(-200);
         }
 
         if (this.cursors.left.isDown) {
