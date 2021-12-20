@@ -32,5 +32,26 @@ Projektet använder
 4. kuna lada in nesta karta (map)
 5. implementera lavinens system/början på funktionen
 
+---
+## info
+*spelet har bara **test** banao nu och inget som splet skule vara.*
 
+speltiteln: 
 
+vem: Milton
+
+Tagline: 
+
+Du är en nisse som gått rogue på färd för att slå emot tomtens hemska arbetsvillkor med enbart tiden som kan slå emot.
+
+Description:
+
+En platformer med jultema där många banor har någon form av tidspress genom samlandet av varm choklad innan man fryser eller att fly från en lavin. Leverera paket för extra poäng och förbered för en boss fight mot tomten i slutet.
+
+Screenshot: ![screenshot](milton-lund.png)
+
+URL: https://agitated-murdock-948596.netlify.app
+
+GIT: https://github.com/NTIG-Umea/wu2-spel-miltonlundte19
+
+Teamname: Furious-Zebras
